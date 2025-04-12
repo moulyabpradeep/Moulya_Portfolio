@@ -24,7 +24,7 @@ with col1:
 with col2:
     st.title("Moulya Bangalore Pradeep")
     st.markdown("""
-    #### Professor | AI & ML Enthusiast | Senior Java Python Developer
+    #### Professor | AI & ML Enthusiast | Senior Java & Python Developer
     Passionate about building AI-driven applications and sharing knowledge with the next generation of tech leaders.
     Over 10+ years of experience in Java, Python, Machine Learning, and Cloud-native solutions.
     """)
