@@ -150,153 +150,223 @@ for i in range(15):  # Image range from 0.jpg to 14.jpg
         
         # Find an available column and place the image there
         col = col_list[i % len(col_list)]  # This ensures the images are placed in a cycle of 3 columns
-        col.image(image, use_container_width=False)  # Display image in the column
+        col.image(image)  # Display image in the column
 
 
-
-#=====================================================================================================================
-# Small heading
-
-import streamlit as st
-from PIL import Image
-
-st.markdown("## 🤖 AI Projects")
-
-# Display the AI image
-ai_image = Image.open("assets/ai.jpg")
-clicked = st.toggle("🔍 Click to explore all AI Projects", help="Click the AI toggle")
-
-# Center image with style
-st.image(ai_image, width=400, caption="AI Projects", use_column_width=False)
-
-# Show projects if toggle is active
-if clicked:
-    project_categories = {
-        "🧠 NLP Projects": {
-            "NLP_Data_Cleaning": "https://github.com/moulyabpradeep/NLP_Data_Cleaning",
-            "Movie_reviews_Sentiment_Analysis": "https://github.com/moulyabpradeep/Movie_reviews_Sentiment_Analysis",
-            "NLP_Project_LargeText_to_Voice_to_Speech_to_lipSync": "https://github.com/moulyabpradeep/NLP_Project_LargeText_to_Voice_to_Speech_to_lipSync",
-            "NLP_Movie_Reviews": "https://github.com/moulyabpradeep/NLP_Movie_Reviews",
-            "ConestogaChatbot": "https://github.com/moulyabpradeep/ConestogaChatbot"
-        },
-        "🧠 Computer Vision Projects": {
-            "ComputerVision_Video_Object_Detect_Segment": "https://github.com/moulyabpradeep/ComputerVision_Video_Object_Detect_Segment",
-            "ComputerVision_Image_Object_Detect_Segment": "https://github.com/moulyabpradeep/ComputerVision_Image_Object_Detect_Segment"
-        },
-        "📈 Time Series / Forecasting Projects": {
-            "Stock_Price_Predictions_Nvidia_ARIMA": "https://github.com/moulyabpradeep/Stock_Price_Predictions_Nvidia_ARIMA",
-            "Nvidia_Stock_Predictions_Kfold_cross_val": "https://github.com/moulyabpradeep/Nvidia_Stock_Predictions_Kfold_cross_val",
-            "PricePredictions_DeepLearning_RNN_LSTM": "https://github.com/moulyabpradeep/PricePredictions_DeepLearning_RNN_LSTM",
-            "TimeSeries_Dataset_Forecasting": "https://github.com/moulyabpradeep/TimeSeries_Dataset_Forecasting"
-        },
-        "📊 Classification / Clustering Projects": {
-            "DBSCAN-Clustering": "https://github.com/moulyabpradeep/DBSCAN-Clustering",
-            "Big_mart_Churn": "https://github.com/moulyabpradeep/Big_mart_Churn",
-            "Heart_disease_Prediction": "https://github.com/moulyabpradeep/Heart_disease_Prediction",
-            "BrainStrokePrediction": "https://github.com/moulyabpradeep/BrainStrokePrediction",
-            "insurance": "https://github.com/moulyabpradeep/insurance",
-            "TraceRent_AI": "https://github.com/moulyabpradeep/TraceRent_AI"
-        }
-    }
-
-    for category, projects in project_categories.items():
-        st.markdown(f"### {category}")
-        for name, url in projects.items():
-            st.markdown(f'<a href="{url}" target="_blank" style="text-decoration: none;"> ▸ {name}</a>', unsafe_allow_html=True)
-
-
-#============
+#=================
 
 
 import streamlit as st
 from PIL import Image
 import base64
 
-# Set default session state
-if "show_web_projects" not in st.session_state:
-    st.session_state["show_web_projects"] = False
-
-# Function to toggle project visibility
-def toggle_projects():
-    st.session_state["show_web_projects"] = not st.session_state["show_web_projects"]
-
 # Load image and convert to base64
-with open("assets/web.jpg", "rb") as image_file:
-    img_base64 = base64.b64encode(image_file.read()).decode()
+import streamlit as st
 
-# Inject styled clickable image
-st.markdown("""
-    <style>
-    .clickable-image {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        width: 400px;
-        border-radius: 12px;
-        transition: all 0.3s ease-in-out;
-        box-shadow: 0 0 0px rgba(0,0,0,0);
-    }
-    .clickable-image:hover {
-        box-shadow: 0px 0px 16px 2px rgba(0, 123, 255, 0.6);
-        cursor: pointer;
-        transform: scale(1.02);
-    }
-    button[title="Hidden form button"] {
-        display: none;
-    }
-    </style>
-""", unsafe_allow_html=True)
+# Title
+st.markdown("## Projects")
 
-# Image wrapped in a button using a form (safe toggle)
-with st.form("image_form", clear_on_submit=True):
-    st.markdown(
-        f'<input type="image" src="data:image/jpeg;base64,{img_base64}" class="clickable-image" alt="Click to show projects"/>',
-        unsafe_allow_html=True
-    )
-    submitted = st.form_submit_button("Hidden form button")
-    if submitted:
-        toggle_projects()
+# Create two columns
+col1, col2 = st.columns(2)
 
-# Display project list
-if st.session_state["show_web_projects"]:
-    st.markdown("### 🌐 Web Development / Platform Projects")
-    project_links = {
-        "webdev2": "https://github.com/moulyabpradeep/webdev2",
-        "TraceRent_AI": "https://github.com/moulyabpradeep/TraceRent_AI",
-        "OnlineTestTakingPlatform": "https://github.com/moulyabpradeep/OnlineTestTakingPlatform",
-        "OnlineCustomerEnrollment": "https://github.com/moulyabpradeep/OnlineCustomerEnrollment/tree/main/.github/workflows",
-        "folder-management": "https://github.com/moulyabpradeep/folder-management"
-    }
+# Web Projects (inside expander)
+with col1:
+    with st.expander("🌐 Web Projects", expanded=False):  # This creates a collapsible section
+        project_links = {
+            "webdev2": {
+                "url": "https://webdev2-delta.vercel.app/",
+                "description": "A web development project was created for course content, which is developed in node and next.js for SAIT Students. It is deployed project with youtube classroom teaching videos."
+            },
+            "TraceRent_AI": {
+                "url": "https://github.com/moulyabpradeep/TraceRent_AI",
+                "description": "AI-powered platform for tenant-property matching. Backend code is developed in python and ML modelling"
+            },
+            "OnlineTestTakingPlatform": {
+                "url": "https://github.com/moulyabpradeep/OnlineTestTakingPlatform",
+                "description": "An online test taking platform to administer and take tests. Developed in Java, Hibernate and Spring"
+            },
+            "OnlineCustomerEnrollment": {
+                "url": "https://github.com/moulyabpradeep/OnlineCustomerEnrollment/tree/main/.github/workflows",
+                "description": "A system for online customer enrollment with financial institutions. Developed in Java, JPA, Hibernate, Springboot."
+            },
+            "ContractBase":{
+                "url":"https://contractbase.ca/",
+                "description":"A Volunteering Project developed for a Recruiter. This website developed using Java and MEAN stack."
+            }
+        }
+        for name, details in project_links.items():
+            st.markdown(f"### {name}")
+            st.markdown(f"**Description:** {details['description']}")
+            st.markdown(f"- [Visit Project]({details['url']})")
 
-    for name, url in project_links.items():
-        st.markdown(f"- [{name}]({url})")
+# AI Projects (inside expander)
+with col2:
+    with st.expander("🤖 AI Projects", expanded=False):  # This creates a collapsible section
+        project_categories = {
+            "📊 Classification / Clustering Projects": {
+                "TraceRent_AI": {
+                    "url": "https://github.com/moulyabpradeep/TraceRent_AI",
+                    "description": "AI-based platform for tenant-property matching and rent prediction."
+                },
+                "BrainStrokePrediction": {
+                    "url": "https://github.com/moulyabpradeep/BrainStrokePrediction",
+                    "description": "Predicting brain stroke risk using machine learning models. Developed in Python and ML modelling. The project is deployed on cloud."
+                },
+                "DBSCAN-Clustering": {
+                    "url": "https://github.com/moulyabpradeep/DBSCAN-Clustering",
+                    "description": "Using DBSCAN for clustering analysis on datasets."
+                },
+                "Big_mart_Churn": {
+                    "url": "https://github.com/moulyabpradeep/Big_mart_Churn",
+                    "description": "Churn prediction model for BigMart's customers."
+                },
+                "Heart_disease_Prediction": {
+                    "url": "https://github.com/moulyabpradeep/Heart_disease_Prediction",
+                    "description": "Predicting the risk of heart disease based on medical data."
+                },
+                
+                "insurance": {
+                    "url": "https://github.com/moulyabpradeep/insurance",
+                    "description": "Predicting insurance claims and customer behavior."
+                }
+            },
+            "🧠 NLP Projects": {
+                "ConestogaChatbot": {
+                    "url": "https://github.com/moulyabpradeep/ConestogaChatbot",
+                    "description": "A chatbot designed for interacting with students at Conestoga College. Developed with Python, RAGs and Vector Database"
+                },
+                "NLP_Data_Cleaning": {
+                    "url": "https://github.com/moulyabpradeep/NLP_Data_Cleaning",
+                    "description": "A project for cleaning and preprocessing text data."
+                },
+                "Movie_reviews_Sentiment_Analysis": {
+                    "url": "https://github.com/moulyabpradeep/Movie_reviews_Sentiment_Analysis",
+                    "description": "Analyzing sentiment in movie reviews using NLP techniques."
+                },
+                "NLP_Project_LargeText_to_Voice_to_Speech_to_lipSync": {
+                    "url": "https://github.com/moulyabpradeep/NLP_Project_LargeText_to_Voice_to_Speech_to_lipSync",
+                    "description": "A large-scale project involving text-to-speech and lip sync for video generation."
+                },
+                "NLP_Movie_Reviews": {
+                    "url": "https://github.com/moulyabpradeep/NLP_Movie_Reviews",
+                    "description": "Processing and analyzing movie reviews with NLP."
+                }
+            },
+            "👁 Computer Vision Projects": {
+                "ComputerVision_Video_Object_Detect_Segment": {
+                    "url": "https://github.com/moulyabpradeep/ComputerVision_Video_Object_Detect_Segment",
+                    "description": "Detecting and segmenting objects in video data using computer vision techniques."
+                },
+                "ComputerVision_Image_Object_Detect_Segment": {
+                    "url": "https://github.com/moulyabpradeep/ComputerVision_Image_Object_Detect_Segment",
+                    "description": "Detecting and segmenting objects in images using computer vision."
+                }
+            },
+            "📈 Time Series / Forecasting Projects": {
+                "Stock_Price_Predictions_Nvidia_ARIMA": {
+                    "url": "https://github.com/moulyabpradeep/Stock_Price_Predictions_Nvidia_ARIMA",
+                    "description": "Using ARIMA to predict Nvidia stock prices over time."
+                },
+                "Nvidia_Stock_Predictions_Kfold_cross_val": {
+                    "url": "https://github.com/moulyabpradeep/Nvidia_Stock_Predictions_Kfold_cross_val",
+                    "description": "Stock prediction with K-fold cross-validation for Nvidia."
+                },
+                "PricePredictions_DeepLearning_RNN_LSTM": {
+                    "url": "https://github.com/moulyabpradeep/PricePredictions_DeepLearning_RNN_LSTM",
+                    "description": "Deep learning model using RNN and LSTM for price predictions."
+                },
+                "TimeSeries_Dataset_Forecasting": {
+                    "url": "https://github.com/moulyabpradeep/TimeSeries_Dataset_Forecasting",
+                    "description": "Time series dataset forecasting using advanced techniques."
+                }
+            }
+        }
+
+        for category, projects in project_categories.items():
+            st.markdown(f"#### {category}")
+            for name, details in projects.items():
+                st.markdown(f"- [{name}]({details['url']})  \n{details['description']}")
+
+
+
+
+
+
+#========================
 
 
 #===================================================================================================================
 # Resume Section
-st.markdown('<div class="highlight">📄 Resume</div>', unsafe_allow_html=True)
-st.markdown('<div class="reveal">', unsafe_allow_html=True)
-st.write("### Professional Summary")
+
+# Title
+st.markdown("## Resume")
+
+
+st.subheader("Professional Summary")
 st.write("""
-Results-driven AI Software Engineer... [same as your content]
+Results-driven AI Software Engineer with over 10 years of experience in enterprise software development, system architecture, and distributed systems. Specializes in Python and Java with deep expertise in machine learning, data modeling, AI automation, and business intelligence.
+
+Skilled in building scalable data pipelines, deploying machine learning models, and enabling intelligent data-driven decisions. Passionate about AI-powered automation and cloud-native solutions.
 """)
 
-st.write("### Experience")
+st.subheader("Experience")
 st.write("""
 **Professor, Data Analytics Dept — SAIT** (Jan 2025 – Present)  
-... [same content]
+• Teaching Python, Machine Learning, Data Modeling, and BI Reporting.  
+• Empowering students with hands-on AI/ML projects and real-world analytics.
+
+**Java Team Lead — Q2, Bangalore** (Jul 2020 – Aug 2023)  
+• Developed AWS-based onboarding apps, integrated KYC systems, led backend team.
+
+**Senior Java Developer — ITC Infotech** (Mar 2019 – Jul 2020)  
+• Built Erste Bank's paperless onboarding system using microservices.
+
+**Java Developer — Capgemini** (Jun 2018 – Mar 2019)  
+• Designed GE Water Purifiers platform with real-time monitoring and filtration insights.
+
+**Associate Java Developer — MeritTrac** (Apr 2014 – Jun 2018)  
+• Built online assessment system including RESTful APIs, scoring engine, and exam delivery.
 """)
 
-st.write("### Education")
-st.write("...")
+st.subheader("Education")
+st.write("""
+**SAIT – Post Graduation in AI** (May 2024 – Dec 2024)  
+• Advanced ML, Deep Learning, NLP, and model deployment.
 
-st.write("### Technical Skills")
-st.write("...")
-st.markdown('</div>', unsafe_allow_html=True)
+**Conestoga College – Big Data & ML** (Sep 2023 – Apr 2024)  
+• ETL, OLAP, BI Reporting, Data Warehousing, and full-stack analytics.
 
+**VTU University – B.E. Computer Science** (2007 – 2011)  
+• Data Structures, DBMS, OOP, Java, C++, MySQL.
+""")
 
-# Final CV Download Section
-st.markdown('<div class="highlight">⬇️ Get Full CV</div>', unsafe_allow_html=True)
-st.markdown('<div class="reveal">', unsafe_allow_html=True)
-st.download_button("📄 Download Full CV", open("assets/Moulya_CV.pdf", "rb").read(), "Moulya_CV.pdf", mime="application/pdf")
-st.markdown('</div>', unsafe_allow_html=True)
+st.subheader("Technical Skills")
+st.write("""
+**Languages**: Python, Java, SQL, MySQL, HTML/CSS, R  
+**Frameworks**: Flask, Streamlit, Spring Boot, Hibernate, JSP, JUnit, PyTest, Maven  
+**Developer Tools**: Jupyter Notebook, Anaconda, Git, Docker, VS Code, PyCharm  
+**Libraries**: TensorFlow, PyTorch, Scikit-learn, XGBoost, Hugging Face, NLTK, NumPy, Matplotlib
+""")
+
+st.subheader("Personal Projects on AI")
+
+st.markdown("**AI Stroke Predictor** | PyCaret, scikit-learn, Streamlit (Jun 2024 – Aug 2024)")
+st.markdown("""
+• Built supervised Random Forest classifier with 100% Kaggle accuracy.  
+• Performed preprocessing, feature selection, and real-time stroke risk prediction.
+""")
+
+st.markdown("**Conestoga AI Chatbot** | Flask, PyTorch, RAG, Vector DB (Jan 2024 – Apr 2024)")
+st.markdown("""
+• Developed chatbot with PDF-based NLP pipeline and vector DB querying.  
+• Integrated RAG for contextual, accurate responses from documents.
+""")
+
+st.markdown("---")
+st.download_button(
+    label="📄 Download Full CV",
+    data=open("assets/Moulya_CV.pdf", "rb").read(),
+    file_name="Moulya_CV.pdf",
+    mime="application/pdf"
+)
+
