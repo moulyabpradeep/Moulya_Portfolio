@@ -150,7 +150,7 @@ for i in range(15):  # Image range from 0.jpg to 14.jpg
         
         # Find an available column and place the image there
         col = col_list[i % len(col_list)]  # This ensures the images are placed in a cycle of 3 columns
-        col.image(image, use_column_width=False)  # Display image in the column
+        col.image(image, use_container_width=False)  # Display image in the column
 
 
 
